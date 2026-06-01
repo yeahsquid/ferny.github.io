@@ -108,6 +108,7 @@
   .yt-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent2), var(--accent)); }
   .yt-card-inner { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem; }
   .yt-avatar { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--accent2), var(--accent)); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--bg); flex-shrink: 0; }
+  .yt-avatar-img {width: 60px; height: 60px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 1px solid var(--muted);}
   .yt-handle { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; color: var(--accent); }
   .yt-sub { font-size: 0.72rem; opacity: 0.4; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.2rem; }
   .yt-desc { font-size: 0.82rem; color: rgba(237,232,245,0.5); line-height: 1.7; }
@@ -206,7 +207,7 @@
         </div>
         <div class="yt-card">
           <div class="yt-card-inner">
-            <div class="yt-avatar">F</div>
+            <img id="yt-avatar" class="yt-avatar-img" alt="YouTube Avatar">
             <div>
               <div class="yt-handle">@xoferny</div>
               <div class="yt-sub">YouTube Channel</div>
@@ -359,6 +360,16 @@
   }
 
   triggerReveal();
+ 
+fetch("https://www.youtube.com/oembed?url=https://www.youtube.com/@xoferny&format=json")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("yt-avatar").src = data.thumbnail_url;
+  })
+  .catch(() => {
+    console.log("Could not load YouTube avatar");
+  });
+</script>
 </script>
 </body>
 </html>
